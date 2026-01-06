@@ -20,7 +20,8 @@ export default function Home() {
     hero: {
       line1: "ขับเคลื่อนธุรกิจยุคใหม่",
       line2: "ด้วยโซลูชันที่เหนือกว่า",
-      sub: "แพลตฟอร์มที่รวมเครื่องมือสำหรับเจ้าของธุรกิจยุคใหม่ ไม่ว่าจะเป็นระบบ POS, จัดการสต็อก และอีกมากมาย ทั้งหมดนี้ใช้งานได้ฟรี ไม่มีค่าใช้จ่ายแอบแฝง"
+      sub: "แพลตฟอร์มที่รวมเครื่องมือสำหรับเจ้าของธุรกิจยุคใหม่ ไม่ว่าจะเป็นระบบ POS, จัดการสต็อก และอีกมากมาย ทั้งหมดนี้ใช้งานได้ฟรี ไม่มีค่าใช้จ่ายแอบแฝง",
+      badge: "แพลตฟอร์มธุรกิจครบวงจร"
     },
     services: [
       { title: "หอพัก", desc: "จัดการผู้อยู่อาศัย บิลค่าน้ำไฟ และสัญญาง่ายๆ", icon: "Building2" },
@@ -127,7 +128,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8 animate-fade-in text-secondary">
               <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-              <span className="text-sm font-medium">บริการฟรีตลอดชีพ สำหรับคุณ</span>
+              <span className="text-sm font-medium">{config.hero.badge}</span>
             </div>
 
             <h1 className="text-4xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white via-white to-white/50 bg-clip-text text-transparent">

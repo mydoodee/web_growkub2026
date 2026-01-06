@@ -22,7 +22,12 @@ export default function AdminPage() {
 
     const [config, setConfig] = useState({
         site: { logoText: "growkub", logoUrl: "" },
-        hero: { line1: "ขับเคลื่อนธุรกิจยุคใหม่", line2: "ด้วยโซลูชันที่เหนือกว่า", sub: "แพลตฟอร์ม..." },
+        hero: {
+            line1: "ขับเคลื่อนธุรกิจยุคใหม่",
+            line2: "ด้วยโซลูชันที่เหนือกว่า",
+            sub: "แพลตฟอร์ม...",
+            badge: "แพลตฟอร์มธุรกิจครบวงจร"
+        },
         services: [{ title: "หอพัก", desc: "จัดการผู้อยู่อาศัย...", icon: "Building2" }],
         spotlight: { heading: "เปลี่ยนหน้าจอ...", items: [{ title: "ไม่จำกัด", desc: "ขายได้..." }] },
         dev: { heading: "รับเขียนโปรแกรม...", sub: "รับพัฒนา...", items: [{ title: "ระบบแอพพลิเคชั่น", sub: "Mobile & Web", icon: "AppWindow" }] },
@@ -184,6 +189,7 @@ export default function AdminPage() {
                             <section className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl">
                                 <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-primary"><Type size={20} /> ส่วนหน้าแรก (Hero)</h2>
                                 <div className="space-y-4">
+                                    <div><label className="block text-sm text-muted-foreground mb-2">ข้อความ Badge (ป้ายกำกับ)</label><input type="text" value={config.hero.badge} onChange={(e) => setConfig({ ...config, hero: { ...config.hero, badge: e.target.value } })} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none font-medium text-secondary" placeholder="เช่น บริการฟรีตลอดชีพ..." /></div>
                                     <div><label className="block text-sm text-muted-foreground mb-2">พาดหัวบรรทัดที่ 1</label><input type="text" value={config.hero.line1} onChange={(e) => setConfig({ ...config, hero: { ...config.hero, line1: e.target.value } })} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none font-bold" /></div>
                                     <div><label className="block text-sm text-muted-foreground mb-2">พาดหัวจุดเด่น (สีทอง)</label><input type="text" value={config.hero.line2} onChange={(e) => setConfig({ ...config, hero: { ...config.hero, line2: e.target.value } })} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none font-bold text-primary" /></div>
                                     <div><label className="block text-sm text-muted-foreground mb-2">คำอธิบาย</label><textarea rows={3} value={config.hero.sub} onChange={(e) => setConfig({ ...config, hero: { ...config.hero, sub: e.target.value } })} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none" /></div>
