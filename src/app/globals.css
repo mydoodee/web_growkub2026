@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #facc15; /* Yellow-400 */
+  --color-secondary: #f97316; /* Orange-500 */
+  --color-accent: #fbbf24; /* Amber-400 */
+  
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  
+  --color-muted: #1f2937; /* Gray-800 */
+  --color-muted-foreground: #9ca3af; /* Gray-400 */
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  @apply antialiased;
+}
+
+.glow-yellow {
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
+}
+
+.gradient-brand {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
