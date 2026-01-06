@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #facc15; /* Yellow-400 */
-  --color-secondary: #f97316; /* Orange-500 */
-  --color-accent: #fbbf24; /* Amber-400 */
-  
+  --color-primary: #f59e0b;
+  /* Golden Orange (Amber-500) */
+  --color-secondary: #fbbf24;
+  /* Lighter Gold (Amber-400) */
+  --color-accent: #d97706;
+  /* Deep Gold (Amber-600) */
+
   --color-background: #000000;
   --color-foreground: #ffffff;
-  
-  --color-muted: #1f2937; /* Gray-800 */
-  --color-muted-foreground: #9ca3af; /* Gray-400 */
+
+  --color-muted: #1f2937;
+  /* Gray-800 */
+  --color-muted-foreground: #9ca3af;
+  /* Gray-400 */
 }
 
 :root {
@@ -20,12 +25,12 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Kanit', system-ui, -apple-system, sans-serif;
   @apply antialiased;
 }
 
-.glow-yellow {
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
+.glow-orange {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
 }
 
 .gradient-brand {
