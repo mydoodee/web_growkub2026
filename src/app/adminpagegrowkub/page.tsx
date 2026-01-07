@@ -197,7 +197,7 @@ export default function AdminPage() {
                             <section className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl">
                                 <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-primary"><Globe size={20} /> ตั้งค่าทั่วไป</h2>
                                 <div className="grid md:grid-cols-2 gap-6">
-                                    <div><label className="block text-sm text-muted-foreground mb-2">ชื่อแบรนด์</label><input type="text" value={config.site.logoText} onChange={(e) => setConfig({ ...config, site: { ...config.site, logoText: e.target.value } })} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none" /></div>
+                                    <div><label className="block text-sm text-muted-foreground mb-2">ชื่อแบรนด์</label><input type="text" value={config.site.logoText} onChange={(e) => setConfig({ ...config, site: { ...config.site, logoText: e.target.value } })} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none select-text" /></div>
                                     <div><label className="block text-sm text-muted-foreground mb-2">อัปโหลด Logo</label><div className="flex gap-4"><label className="flex-1 cursor-pointer bg-white/5 border border-dashed border-white/20 rounded-xl p-3 hover:bg-white/10 flex items-center justify-center gap-2"><Upload size={18} className={uploading === 'logo' ? 'animate-bounce' : ''} /><span className="text-sm">{uploading === 'logo' ? 'กำลังอัปโหลด...' : 'เลือกไฟล์'}</span><input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'logo')} /></label>{config.site.logoUrl && <div className="w-12 h-12 rounded-lg bg-white/10 overflow-hidden"><img src={config.site.logoUrl} alt="logo" className="w-full h-full object-contain" /></div>}</div></div>
                                 </div>
                             </section>
@@ -220,7 +220,7 @@ export default function AdminPage() {
                                 <div className="flex justify-between items-center mb-6"><h2 className="text-xl font-bold flex items-center gap-2 text-primary"><CreditCard size={20} /> รายการบริการ</h2><button onClick={addService} className="flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-xl text-sm font-bold hover:bg-primary/20"><Plus size={16} /> เพิ่ม</button></div>
                                 <div className="mb-8 p-4 bg-black/20 rounded-xl border border-white/5">
                                     <label className="block text-sm text-muted-foreground mb-2">Ecosystem Header Link (ลิงก์หัวข้อ)</label>
-                                    <input type="text" value={(config as any).ecosystemLink || ""} onChange={(e) => setConfig({ ...config, ecosystemLink: e.target.value } as any)} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none text-primary" placeholder="https://growkub.com" />
+                                    <input type="text" value={(config as any).ecosystemLink || ""} onChange={(e) => setConfig({ ...config, ecosystemLink: e.target.value } as any)} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none text-primary select-text" placeholder="https://growkub.com" />
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-6">
                                     {config.services.map((item: any, idx) => (
@@ -231,7 +231,7 @@ export default function AdminPage() {
                                                 <textarea placeholder="คำอธิบาย" rows={2} value={item.desc} onChange={(e) => { const s = [...config.services]; s[idx].desc = e.target.value; setConfig({ ...config, services: s }); }} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none text-sm" />
                                                 <div className="relative">
                                                     <ExternalLink className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
-                                                    <input type="text" placeholder="Link URL" value={item.link || ""} onChange={(e) => { const s: any[] = [...config.services]; s[idx].link = e.target.value; setConfig({ ...config, services: s }); }} className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-3 py-2 focus:border-primary outline-none text-xs text-muted-foreground" />
+                                                    <input type="text" placeholder="Link URL" value={item.link || ""} onChange={(e) => { const s: any[] = [...config.services]; s[idx].link = e.target.value; setConfig({ ...config, services: s }); }} className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-3 py-2 focus:border-primary outline-none text-xs text-muted-foreground select-text" />
                                                 </div>
                                             </div>
                                         </div>
