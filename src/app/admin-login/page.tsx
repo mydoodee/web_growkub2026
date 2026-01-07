@@ -37,14 +37,15 @@ export default function AdminLoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white flex items-center justify-center p-4 font-kanit">
+        // Use flex-col and overflow-auto to handle virtual keyboard on mobile
+        <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 font-kanit overflow-y-auto">
             {/* Background Effects */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[150px] rounded-full animate-pulse" />
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
             </div>
 
-            <div className="w-full max-w-md relative z-10">
+            <div className="w-full max-w-md relative z-10 py-10">
                 {/* Logo/Brand */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-2 mb-4">
@@ -80,7 +81,7 @@ export default function AdminLoginPage() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="admin@example.com"
                                     required
-                                    className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-4 py-3 focus:border-primary outline-none transition-colors"
+                                    className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-4 py-3 focus:border-primary outline-none transition-colors text-base"
                                 />
                             </div>
                         </div>
@@ -98,7 +99,7 @@ export default function AdminLoginPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
                                     required
-                                    className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-12 py-3 focus:border-primary outline-none transition-colors"
+                                    className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-12 py-3 focus:border-primary outline-none transition-colors text-base"
                                 />
                                 <button
                                     type="button"
