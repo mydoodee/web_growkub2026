@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, LogIn, AlertCircle } from 'lucide-react';
 
@@ -19,7 +20,6 @@ export default function AdminLoginPage() {
         setError('');
 
         try {
-            const auth = getAuth();
             await signInWithEmailAndPassword(auth, email, password);
             router.push('/adminpagegrowkub');
         } catch (err: any) {

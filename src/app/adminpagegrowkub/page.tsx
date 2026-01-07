@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { db, storage } from '@/lib/firebase';
+import { db, storage, auth } from '@/lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import {
     Save, RefreshCw, LayoutDashboard, Type, CreditCard, PlaySquare, Upload, Plus, Trash2,
-    Globe, Code2, BarChart3, Info, FileText, Users, Target, Heart, LogOut
+    Globe, Code2, BarChart3, Info, FileText, Users, Target, Heart, LogOut, ExternalLink
 } from 'lucide-react';
 
 export default function AdminPage() {
@@ -22,13 +22,14 @@ export default function AdminPage() {
 
     const [config, setConfig] = useState({
         site: { logoText: "growkub", logoUrl: "" },
+        ecosystemLink: "https://growkub.com",
         hero: {
             line1: "ขับเคลื่อนธุรกิจยุคใหม่",
             line2: "ด้วยโซลูชันที่เหนือกว่า",
             sub: "แพลตฟอร์ม...",
             badge: "แพลตฟอร์มธุรกิจครบวงจร"
         },
-        services: [{ title: "หอพัก", desc: "จัดการผู้อยู่อาศัย...", icon: "Building2" }],
+        services: [{ title: "หอพัก", desc: "จัดการผู้อยู่อาศัย...", icon: "Building2", link: "https://growkub.com" }],
         spotlight: { heading: "เปลี่ยนหน้าจอ...", items: [{ title: "ไม่จำกัด", desc: "ขายได้..." }] },
         dev: { heading: "รับเขียนโปรแกรม...", sub: "รับพัฒนา...", items: [{ title: "ระบบแอพพลิเคชั่น", sub: "Mobile & Web", icon: "AppWindow" }] },
         features: { heading: "ครบทุกฟังก์ชัน...", sub: "เราเติบโต...", items: [{ title: "ระบบ POS ฟรี", desc: "จัดการงาน...", icon: "BarChart3" }] },
@@ -54,7 +55,6 @@ export default function AdminPage() {
 
     // Check authentication
     useEffect(() => {
-        const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsAuthenticated(true);
@@ -73,7 +73,20 @@ export default function AdminPage() {
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    setConfig((prev) => ({ ...prev, ...data, site: { ...prev.site, ...data.site }, hero: { ...prev.hero, ...data.hero }, services: data.services || prev.services, spotlight: { ...prev.spotlight, ...data.spotlight, items: data.spotlight?.items || prev.spotlight.items }, dev: { ...prev.dev, ...data.dev, items: data.dev?.items || prev.dev.items }, features: { ...prev.features, ...data.features, items: data.features?.items || prev.features.items }, footer: { ...prev.footer, ...data.footer }, pages: { ...prev.pages, ...data.pages } }));
+                    // Merge new fields if they don't exist in DB yet
+                    setConfig((prev) => ({
+                        ...prev,
+                        ...data,
+                        ecosystemLink: data.ecosystemLink || prev.ecosystemLink,
+                        site: { ...prev.site, ...data.site },
+                        hero: { ...prev.hero, ...data.hero },
+                        services: (data.services || prev.services).map((s: any) => ({ ...s, link: s.link || "https://growkub.com" })),
+                        spotlight: { ...prev.spotlight, ...data.spotlight, items: data.spotlight?.items || prev.spotlight.items },
+                        dev: { ...prev.dev, ...data.dev, items: data.dev?.items || prev.dev.items },
+                        features: { ...prev.features, ...data.features, items: data.features?.items || prev.features.items },
+                        footer: { ...prev.footer, ...data.footer },
+                        pages: { ...prev.pages, ...data.pages }
+                    }));
                 }
             } catch (err: any) {
                 setError(err.message || "Failed to connect");
@@ -85,7 +98,6 @@ export default function AdminPage() {
     }, [isAuthenticated]);
 
     const handleLogout = async () => {
-        const auth = getAuth();
         await signOut(auth);
         router.push('/admin-login');
     };
@@ -120,7 +132,7 @@ export default function AdminPage() {
         }
     };
 
-    const addService = () => { setConfig({ ...config, services: [...config.services, { title: "บริการใหม่", desc: "คำอธิบาย", icon: "Zap" }] }); showToast("เพิ่มบริการ"); };
+    const addService = () => { setConfig({ ...config, services: [...config.services, { title: "บริการใหม่", desc: "คำอธิบาย", icon: "Zap", link: "https://growkub.com" }] }); showToast("เพิ่มบริการ"); };
     const deleteService = (idx: number) => { setConfig({ ...config, services: config.services.filter((_, i) => i !== idx) }); showToast("ลบแล้ว"); };
     const addSpotlightItem = () => { setConfig({ ...config, spotlight: { ...config.spotlight, items: [...config.spotlight.items, { title: "หัวข้อ", desc: "รายละเอียด" }] } }); showToast("เพิ่มแล้ว"); };
     const deleteSpotlightItem = (idx: number) => { setConfig({ ...config, spotlight: { ...config.spotlight, items: config.spotlight.items.filter((_, i) => i !== idx) } }); showToast("ลบแล้ว"); };
@@ -157,6 +169,10 @@ export default function AdminPage() {
                         <h1 className="text-2xl md:text-3xl font-black uppercase">Growkub CMS</h1>
                     </div>
                     <div className="flex gap-3">
+                        <a href="https://growkub.com" target="_blank" rel="noopener noreferrer" className="px-4 py-3 bg-white/5 text-white border border-white/10 rounded-xl font-bold flex items-center gap-2 hover:bg-white/10 transition-all active:scale-95">
+                            <ExternalLink size={18} />
+                            <span className="hidden md:inline">ไปที่หน้าเว็บ</span>
+                        </a>
                         <button onClick={handleLogout} className="px-4 py-3 bg-red-500/10 text-red-500 border border-red-500/20 rounded-xl font-bold flex items-center gap-2 hover:bg-red-500/20 transition-all active:scale-95">
                             <LogOut size={18} />
                             <span className="hidden md:inline">ออกจากระบบ</span>
@@ -202,13 +218,21 @@ export default function AdminPage() {
                         <>
                             <section className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl">
                                 <div className="flex justify-between items-center mb-6"><h2 className="text-xl font-bold flex items-center gap-2 text-primary"><CreditCard size={20} /> รายการบริการ</h2><button onClick={addService} className="flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-xl text-sm font-bold hover:bg-primary/20"><Plus size={16} /> เพิ่ม</button></div>
+                                <div className="mb-8 p-4 bg-black/20 rounded-xl border border-white/5">
+                                    <label className="block text-sm text-muted-foreground mb-2">Ecosystem Header Link (ลิงก์หัวข้อ)</label>
+                                    <input type="text" value={(config as any).ecosystemLink || ""} onChange={(e) => setConfig({ ...config, ecosystemLink: e.target.value } as any)} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none text-primary" placeholder="https://growkub.com" />
+                                </div>
                                 <div className="grid md:grid-cols-2 gap-6">
-                                    {config.services.map((item, idx) => (
+                                    {config.services.map((item: any, idx) => (
                                         <div key={idx} className="p-6 border border-white/5 bg-black/30 rounded-2xl relative">
                                             <button onClick={() => deleteService(idx)} className="absolute top-4 right-4 text-red-500/50 hover:text-red-500"><Trash2 size={20} /></button>
                                             <div className="space-y-4 pr-8">
                                                 <input type="text" placeholder="หัวข้อ" value={item.title} onChange={(e) => { const s = [...config.services]; s[idx].title = e.target.value; setConfig({ ...config, services: s }); }} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none font-bold" />
                                                 <textarea placeholder="คำอธิบาย" rows={2} value={item.desc} onChange={(e) => { const s = [...config.services]; s[idx].desc = e.target.value; setConfig({ ...config, services: s }); }} className="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-primary outline-none text-sm" />
+                                                <div className="relative">
+                                                    <ExternalLink className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                                                    <input type="text" placeholder="Link URL" value={item.link || ""} onChange={(e) => { const s: any[] = [...config.services]; s[idx].link = e.target.value; setConfig({ ...config, services: s }); }} className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-3 py-2 focus:border-primary outline-none text-xs text-muted-foreground" />
+                                                </div>
                                             </div>
                                         </div>
                                     ))}

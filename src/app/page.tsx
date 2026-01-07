@@ -17,6 +17,7 @@ export default function Home() {
       logoText: "growkub",
       logoUrl: ""
     },
+    ecosystemLink: "https://growkub.com",
     hero: {
       line1: "ขับเคลื่อนธุรกิจยุคใหม่",
       line2: "ด้วยโซลูชันที่เหนือกว่า",
@@ -24,10 +25,10 @@ export default function Home() {
       badge: "แพลตฟอร์มธุรกิจครบวงจร"
     },
     services: [
-      { title: "หอพัก", desc: "จัดการผู้อยู่อาศัย บิลค่าน้ำไฟ และสัญญาง่ายๆ", icon: "Building2" },
-      { title: "POS", desc: "ระบบขายหน้าหน้าร้านที่เสถียร รองรับทุกอุปกรณ์", icon: "ShoppingBag" },
-      { title: "QDD", desc: "สั่งอาหารผ่าน QR Code ลดการรอคอย เพิ่มยอดขาย", icon: "QrCode" },
-      { title: "ระบบจอง", desc: "จัดการคิวและนัดหมายออนไลน์ได้ตลอด 24 ชม.", icon: "CalendarCheck" }
+      { title: "หอพัก", desc: "จัดการผู้อยู่อาศัย บิลค่าน้ำไฟ และสัญญาง่ายๆ", icon: "Building2", link: "https://growkub.com" },
+      { title: "POS", desc: "ระบบขายหน้าหน้าร้านที่เสถียร รองรับทุกอุปกรณ์", icon: "ShoppingBag", link: "https://growkub.com" },
+      { title: "QDD", desc: "สั่งอาหารผ่าน QR Code ลดการรอคอย เพิ่มยอดขาย", icon: "QrCode", link: "https://growkub.com" },
+      { title: "ระบบจอง", desc: "จัดการคิวและนัดหมายออนไลน์ได้ตลอด 24 ชม.", icon: "CalendarCheck", link: "https://growkub.com" }
     ],
     spotlight: {
       heading: "เปลี่ยนหน้าจอให้เป็น ระบบขายของมืออาชีพ",
@@ -153,20 +154,23 @@ export default function Home() {
             <div className="mt-24">
               <div className="text-center mb-12">
                 <p className="text-primary font-bold text-sm mb-2 uppercase tracking-[0.2em]">Our Ecosystem</p>
-                <h2 className="text-3xl md:text-5xl font-black">ใช้งานได้จริงทุกที่ ทุกเวลา</h2>
+                <a href={(config as any).ecosystemLink || "https://growkub.com"} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                  <h2 className="text-3xl md:text-5xl font-black">ใช้งานได้จริงทุกที่ ทุกเวลา</h2>
+                </a>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {config.services.map((service, idx) => (
-                  <ServiceGridCard
-                    key={idx}
-                    icon={service.icon === "Building2" ? <Building2 className="text-primary" size={28} /> :
-                      service.icon === "ShoppingBag" ? <ShoppingBag className="text-secondary" size={28} /> :
-                        service.icon === "QrCode" ? <QrCode className="text-primary" size={28} /> :
-                          <CalendarCheck className="text-secondary" size={28} />}
-                    title={service.title}
-                    desc={service.desc}
-                  />
+                {config.services.map((service: any, idx) => (
+                  <a key={idx} href={service.link || "https://growkub.com"} target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-300">
+                    <ServiceGridCard
+                      icon={service.icon === "Building2" ? <Building2 className="text-primary" size={28} /> :
+                        service.icon === "ShoppingBag" ? <ShoppingBag className="text-secondary" size={28} /> :
+                          service.icon === "QrCode" ? <QrCode className="text-primary" size={28} /> :
+                            <CalendarCheck className="text-secondary" size={28} />}
+                      title={service.title}
+                      desc={service.desc}
+                    />
+                  </a>
                 ))}
               </div>
             </div>

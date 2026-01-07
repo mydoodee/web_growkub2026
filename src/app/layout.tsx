@@ -10,6 +10,9 @@ const kanit = Kanit({
 export const metadata: Metadata = {
   title: "Growkub - บริการฟรีเพื่อธุรกิจคุณ",
   description: "ระบบ POS และเครื่องมือจัดการธุรกิจฟรีทุกอย่าง",
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({
